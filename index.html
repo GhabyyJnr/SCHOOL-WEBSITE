@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pM8jR9Bw6yxC1fGHF58S0bqSJ+vIOncPXFu7WOVXqowUDbESxZf2wFtuR/O6uhcjh1L5Bf6mQmK2bLPUS5lbiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script src="script.js"></script>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>EDUManage</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" data-page="dashboard">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="students">
+                            <i class="fas fa-users"></i>
+                            <span>Students</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="teachers">
+                            <i class="fas fa-chalkboard-user"></i>
+                            <span>Teachers</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="classes">
+                            <i class="fas fa-door-open"></i>
+                            <span>Classes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="departments">
+                            <i class="fas fa-building"></i>
+                            <span>Departments</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="attendance">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>Attendance</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="grades">
+                            <i class="fas fa-star"></i>
+                            <span>Grades</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="timetable">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Timetable</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="events">
+                            <i class="fas fa-calendar-days"></i>
+                            <span>Events</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="finance">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>Finance</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="library">
+                            <i class="fas fa-book"></i>
+                            <span>Library</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="notices">
+                            <i class="fas fa-bell"></i>
+                            <span>Notices</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="login">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Login</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="settings">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-profile" id="sidebarUserProfile">
+                    <img src="https://via.placeholder.com/40" alt="User" class="user-avatar" id="sidebarUserAvatar">
+                    <div class="user-info">
+                        <p class="user-name">Admin User</p>
+                        <p class="user-role">Administrator</p>
+                    </div>
+                </div>
+                <div class="avatar-upload">
+                    <label for="profilePicInput" class="btn btn-primary btn-small" style="margin-bottom: 8px;">Upload Photo</label>
+                    <input type="file" id="profilePicInput" accept="image/*" style="display:none">
+                </div>
+                <button id="sidebarLogoutBtn" class="btn btn-secondary btn-small" type="button">Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h1 id="pageTitle">Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search...">
+                    </div>
+                    <div class="header-icons">
+                        <button class="icon-btn" id="notificationBtn">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                        <button class="icon-btn" id="themeToggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="icon-btn" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Top Navigation Bar -->
+            <nav class="top-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" data-page="dashboard">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="students">
+                            <i class="fas fa-users"></i>
+                            <span>Students</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="teachers">
+                            <i class="fas fa-chalkboard-user"></i>
+                            <span>Teachers</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="classes">
+                            <i class="fas fa-door-open"></i>
+                            <span>Classes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="departments">
+                            <i class="fas fa-building"></i>
+                            <span>Departments</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="attendance">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>Attendance</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="grades">
+                            <i class="fas fa-star"></i>
+                            <span>Grades</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="timetable">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Timetable</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="events">
+                            <i class="fas fa-calendar-days"></i>
+                            <span>Events</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="finance">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>Finance</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="library">
+                            <i class="fas fa-book"></i>
+                            <span>Library</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="notices">
+                            <i class="fas fa-bell"></i>
+                            <span>Notices</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="settings">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Content Container -->
+            <div class="content-wrapper">
+                <!-- Dashboard Page -->
+                <div id="dashboard" class="page-content active">
+                    <div class="dashboard-grid">
+                        <!-- Stats Cards -->
+                        <div class="stats-container">
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3>Total Students</h3>
+                                    <p class="stat-value">1,245</p>
+                                    <span class="stat-change">+12% from last month</span>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-chalkboard-user"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3>Total Teachers</h3>
+                                    <p class="stat-value">85</p>
+                                    <span class="stat-change">+5% from last month</span>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <i class="fas fa-door-open"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3>Total Classes</h3>
+                                    <p class="stat-value">42</p>
+                                    <span class="stat-change">Stable</span>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3>Total Revenue</h3>
+                                    <p class="stat-value">$125,450</p>
+                                    <span class="stat-change">+8% from last month</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Charts Section -->
+                        <div class="charts-section">
+                            <div class="chart-card">
+                                <div class="chart-header">
+                                    <h3>Attendance Overview</h3>
+                                    <select class="chart-filter">
+                                        <option>This Month</option>
+                                        <option>Last Month</option>
+                                        <option>This Year</option>
+                                    </select>
+                                </div>
+                                <canvas id="attendanceChart" class="chart-canvas"></canvas>
+                            </div>
+
+                            <div class="chart-card">
+                                <div class="chart-header">
+                                    <h3>Grade Distribution</h3>
+                                </div>
+                                <canvas id="gradesChart" class="chart-canvas"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activities -->
+                        <div class="recent-activities">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>Recent Activities</h3>
+                                </div>
+                                <div class="activity-list">
+                                    <div class="activity-item">
+                                        <div class="activity-icon" style="background: #e3f2fd;">
+                                            <i class="fas fa-user-plus"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <p class="activity-title">New student enrolled</p>
+                                            <p class="activity-time">2 hours ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="activity-item">
+                                        <div class="activity-icon" style="background: #f3e5f5;">
+                                            <i class="fas fa-file-upload"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <p class="activity-title">Grades uploaded for Class 10A</p>
+                                            <p class="activity-time">5 hours ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="activity-item">
+                                        <div class="activity-icon" style="background: #e8f5e9;">
+                                            <i class="fas fa-calendar-check"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <p class="activity-title">Attendance marked for today</p>
+                                            <p class="activity-time">8 hours ago</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Upcoming Events -->
+                        <div class="upcoming-events">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>Upcoming Events</h3>
+                                </div>
+                                <div class="events-list">
+                                    <div class="event-item">
+                                        <div class="event-date">
+                                            <span class="date-day">25</span>
+                                            <span class="date-month">Mar</span>
+                                        </div>
+                                        <div class="event-details">
+                                            <p class="event-title">Annual Sports Day</p>
+                                            <p class="event-location"><i class="fas fa-map-marker-alt"></i> Main Ground</p>
+                                        </div>
+                                    </div>
+                                    <div class="event-item">
+                                        <div class="event-date">
+                                            <span class="date-day">28</span>
+                                            <span class="date-month">Mar</span>
+                                        </div>
+                                        <div class="event-details">
+                                            <p class="event-title">Science Exhibition</p>
+                                            <p class="event-location"><i class="fas fa-map-marker-alt"></i> Science Block</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Students Page -->
+                <div id="students" class="page-content">
+                    <div class="page-header">
+                        <h2>Student Management</h2>
+                        <button class="btn btn-primary" id="addStudentBtn">
+                            <i class="fas fa-plus"></i> Add New Student
+                        </button>
+                    </div>
+
+                    <div class="filters-bar">
+                        <input type="text" placeholder="Search students..." class="search-input" id="studentSearch">
+                        <select class="filter-select" id="classFilter">
+                            <option value="">All Classes</option>
+                            <option value="10A">Class 10A</option>
+                            <option value="10B">Class 10B</option>
+                            <option value="9A">Class 9A</option>
+                        </select>
+                        <select class="filter-select" id="statusFilter">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Roll No</th>
+                                    <th>Name</th>
+                                    <th>Class</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTableBody">
+                                <tr>
+                                    <td>001</td>
+                                    <td>John Smith</td>
+                                    <td>10A</td>
+                                    <td>john@example.com</td>
+                                    <td>555-0101</td>
+                                    <td><span class="badge badge-success">Active</span></td>
+                                    <td>
+                                        <button class="btn-icon btn-edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>002</td>
+                                    <td>Sarah Johnson</td>
+                                    <td>10A</td>
+                                    <td>sarah@example.com</td>
+                                    <td>555-0102</td>
+                                    <td><span class="badge badge-success">Active</span></td>
+                                    <td>
+                                        <button class="btn-icon btn-edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>003</td>
+                                    <td>Michael Brown</td>
+                                    <td>10B</td>
+                                    <td>michael@example.com</td>
+                                    <td>555-0103</td>
+                                    <td><span class="badge badge-warning">Inactive</span></td>
+                                    <td>
+                                        <button class="btn-icon btn-edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Teachers Page -->
+                <div id="teachers" class="page-content">
+                    <div class="page-header">
+                        <h2>Teacher Management</h2>
+                        <button class="btn btn-primary" id="addTeacherBtn">
+                            <i class="fas fa-plus"></i> Add New Teacher
+                        </button>
+                    </div>
+
+                    <div class="filters-bar">
+                        <input type="text" placeholder="Search teachers..." class="search-input" id="teacherSearch">
+                        <select class="filter-select" id="departmentFilter">
+                            <option value="">All Departments</option>
+                            <option value="science">Science</option>
+                            <option value="maths">Mathematics</option>
+                            <option value="english">English</option>
+                            <option value="social">Social Studies</option>
+                        </select>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Qualification</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teachersTableBody">
+                                <tr>
+                                    <td>T001</td>
+                                    <td>Dr. Emily Wilson</td>
+                                    <td>Science</td>
+                                    <td>emily@school.com</td>
+                                    <td>555-1001</td>
+                                    <td>M.Sc Physics</td>
+                                    <td>
+                                        <button class="btn-icon btn-edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>T002</td>
+                                    <td>Prof. James Davis</td>
+                                    <td>Mathematics</td>
+                                    <td>james@school.com</td>
+                                    <td>555-1002</td>
+                                    <td>M.Tech</td>
+                                    <td>
+                                        <button class="btn-icon btn-edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>T003</td>
+                                    <td>Ms. Lisa Anderson</td>
+                                    <td>English</td>
+                                    <td>lisa@school.com</td>
+                                    <td>555-1003</td>
+                                    <td>M.A English</td>
+                                    <td>
+                                        <button class="btn-icon btn-edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Classes Page -->
+                <div id="classes" class="page-content">
+                    <div class="page-header">
+                        <h2>Class Management</h2>
+                        <button class="btn btn-primary" id="addClassBtn">
+                            <i class="fas fa-plus"></i> Add New Class
+                        </button>
+                    </div>
+
+                    <div class="classes-grid" id="classesGrid">
+                        <!-- Class cards will be rendered dynamically -->
+                    </div>
+                </div>
+
+                <!-- Departments Page -->
+                <div id="departments" class="page-content">
+                    <div class="page-header">
+                        <h2>Department Management</h2>
+                        <button class="btn btn-primary" id="addDepartmentBtn">
+                            <i class="fas fa-plus"></i> Add New Department
+                        </button>
+                    </div>
+
+                    <div class="classes-grid" id="departmentsGrid">
+                        <!-- Department cards will be rendered dynamically -->
+                    </div>
+                </div>
+
+                <!-- Attendance Page -->
+                <div id="attendance" class="page-content">
+                    <div class="page-header">
+                        <h2>Attendance Management</h2>
+                    </div>
+
+                    <div class="attendance-controls">
+                        <div class="date-picker">
+                            <label>Select Date:</label>
+                            <input type="date" id="attendanceDate" class="form-control">
+                        </div>
+                        <div class="class-selector">
+                            <label>Select Class:</label>
+                            <select id="attendanceClass" class="form-control">
+                                <option value="">Choose Class</option>
+                                <option value="10A">Class 10A</option>
+                                <option value="10B">Class 10B</option>
+                                <option value="9A">Class 9A</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="attendance-table-section">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Roll No</th>
+                                        <th>Student Name</th>
+                                        <th>Status</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attendanceTableBody">
+                                    <tr>
+                                        <td>001</td>
+                                        <td>John Smith</td>
+                                        <td>
+                                            <select class="attendance-status">
+                                                <option value="present">Present</option>
+                                                <option value="absent">Absent</option>
+                                                <option value="leave">Leave</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" class="form-control" placeholder="Add remarks"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>002</td>
+                                        <td>Sarah Johnson</td>
+                                        <td>
+                                            <select class="attendance-status">
+                                                <option value="present" selected>Present</option>
+                                                <option value="absent">Absent</option>
+                                                <option value="leave">Leave</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" class="form-control" placeholder="Add remarks"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="attendance-actions">
+                            <button class="btn btn-primary">Save Attendance</button>
+                            <button class="btn btn-secondary">Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grades Page -->
+                <div id="grades" class="page-content">
+                    <div class="page-header">
+                        <h2>Grades Management</h2>
+                        <button class="btn btn-primary" id="addGradeBtn">
+                            <i class="fas fa-plus"></i> Add Grades
+                        </button>
+                    </div>
+
+                    <div class="grades-filters">
+                        <select class="filter-select" id="gradeClassFilter">
+                            <option value="">All Classes</option>
+                            <option value="10A">Class 10A</option>
+                            <option value="10B">Class 10B</option>
+                            <option value="9A">Class 9A</option>
+                        </select>
+                        <select class="filter-select" id="examFilter">
+                            <option value="">All Exams</option>
+                            <option value="midterm">Mid Term</option>
+                            <option value="final">Final Exam</option>
+                            <option value="unit">Unit Test</option>
+                        </select>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Roll No</th>
+                                    <th>Student Name</th>
+                                    <th>Class</th>
+                                    <th>Subject</th>
+                                    <th>Exam</th>
+                                    <th>Marks</th>
+                                    <th>Grade</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="gradesTableBody">
+                                <tr>
+                                    <td>001</td>
+                                    <td>John Smith</td>
+                                    <td>10A</td>
+                                    <td>Mathematics</td>
+                                    <td>Mid Term</td>
+                                    <td>85</td>
+                                    <td><span class="badge badge-success">A</span></td>
+                                    <td>
+                                        <button class="btn-icon btn-edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>002</td>
+                                    <td>Sarah Johnson</td>
+                                    <td>10A</td>
+                                    <td>Mathematics</td>
+                                    <td>Mid Term</td>
+                                    <td>92</td>
+                                    <td><span class="badge badge-success">A+</span></td>
+                                    <td>
+                                        <button class="btn-icon btn-edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Timetable Page -->
+                <div id="timetable" class="page-content">
+                    <div class="page-header">
+                        <h2>Timetable</h2>
+                        <button class="btn btn-primary" id="editTimetableBtn">
+                            <i class="fas fa-edit"></i> Edit Timetable
+                        </button>
+                    </div>
+
+                    <div class="timetable-selector">
+                        <label>Select Class:</label>
+                        <select id="timetableClassSelect" class="form-control">
+                            <option value="10A">Class 10A</option>
+                            <option value="10B">Class 10B</option>
+                            <option value="9A">Class 9A</option>
+                        </select>
+                    </div>
+
+                    <div class="timetable-container">
+                        <table class="timetable">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Monday</th>
+                                    <th>Tuesday</th>
+                                    <th>Wednesday</th>
+                                    <th>Thursday</th>
+                                    <th>Friday</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="time-slot">8:00 - 9:00</td>
+                                    <td>Mathematics</td>
+                                    <td>English</td>
+                                    <td>Science</td>
+                                    <td>History</td>
+                                    <td>Geography</td>
+                                </tr>
+                                <tr>
+                                    <td class="time-slot">9:00 - 10:00</td>
+                                    <td>English</td>
+                                    <td>Science</td>
+                                    <td>Mathematics</td>
+                                    <td>Geography</td>
+                                    <td>History</td>
+                                </tr>
+                                <tr>
+                                    <td class="time-slot">10:00 - 10:15</td>
+                                    <td colspan="5" class="break-time">Break</td>
+                                </tr>
+                                <tr>
+                                    <td class="time-slot">10:15 - 11:15</td>
+                                    <td>Science</td>
+                                    <td>Mathematics</td>
+                                    <td>English</td>
+                                    <td>Computer</td>
+                                    <td>PE</td>
+                                </tr>
+                                <tr>
+                                    <td class="time-slot">11:15 - 12:15</td>
+                                    <td>History</td>
+                                    <td>Geography</td>
+                                    <td>Computer</td>
+                                    <td>English</td>
+                                    <td>Science</td>
+                                </tr>
+                                <tr>
+                                    <td class="time-slot">12:15 - 1:00</td>
+                                    <td colspan="5" class="lunch-time">Lunch Break</td>
+                                </tr>
+                                <tr>
+                                    <td class="time-slot">1:00 - 2:00</td>
+                                    <td>PE</td>
+                                    <td>Computer</td>
+                                    <td>History</td>
+                                    <td>Science</td>
+                                    <td>Mathematics</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Events Page -->
+                <div id="events" class="page-content">
+                    <div class="page-header">
+                        <h2>Events Management</h2>
+                        <button class="btn btn-primary" id="addEventBtn">
+                            <i class="fas fa-plus"></i> Add Event
+                        </button>
+                    </div>
+
+                    <div class="events-container">
+                        <div class="event-card">
+                            <div class="event-card-header">
+                                <h3>Annual Sports Day</h3>
+                                <span class="event-badge">Upcoming</span>
+                            </div>
+                            <div class="event-card-body">
+                                <p><i class="fas fa-calendar"></i> <strong>Date:</strong> March 25, 2026</p>
+                                <p><i class="fas fa-clock"></i> <strong>Time:</strong> 9:00 AM - 5:00 PM</p>
+                                <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> Main Ground</p>
+                                <p><i class="fas fa-users"></i> <strong>Participants:</strong> All Classes</p>
+                                <p><i class="fas fa-align-left"></i> <strong>Description:</strong> Annual inter-class sports competition featuring various athletic events.</p>
+                            </div>
+                            <div class="event-card-actions">
+                                <button class="btn btn-small btn-primary">Edit</button>
+                                <button class="btn btn-small btn-secondary">Delete</button>
+                            </div>
+                        </div>
+
+                        <div class="event-card">
+                            <div class="event-card-header">
+                                <h3>Science Exhibition</h3>
+                                <span class="event-badge">Upcoming</span>
+                            </div>
+                            <div class="event-card-body">
+                                <p><i class="fas fa-calendar"></i> <strong>Date:</strong> March 28, 2026</p>
+                                <p><i class="fas fa-clock"></i> <strong>Time:</strong> 10:00 AM - 4:00 PM</p>
+                                <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> Science Block</p>
+                                <p><i class="fas fa-users"></i> <strong>Participants:</strong> Classes 8-10</p>
+                                <p><i class="fas fa-align-left"></i> <strong>Description:</strong> Students showcase their science projects and experiments.</p>
+                            </div>
+                            <div class="event-card-actions">
+                                <button class="btn btn-small btn-primary">Edit</button>
+                                <button class="btn btn-small btn-secondary">Delete</button>
+                            </div>
+                        </div>
+
+                        <div class="event-card">
+                            <div class="event-card-header">
+                                <h3>Parent-Teacher Meeting</h3>
+                                <span class="event-badge">Upcoming</span>
+                            </div>
+                            <div class="event-card-body">
+                                <p><i class="fas fa-calendar"></i> <strong>Date:</strong> April 5, 2026</p>
+                                <p><i class="fas fa-clock"></i> <strong>Time:</strong> 2:00 PM - 5:00 PM</p>
+                                <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> School Auditorium</p>
+                                <p><i class="fas fa-users"></i> <strong>Participants:</strong> All Classes</p>
+                                <p><i class="fas fa-align-left"></i> <strong>Description:</strong> Quarterly parent-teacher interaction session.</p>
+                            </div>
+                            <div class="event-card-actions">
+                                <button class="btn btn-small btn-primary">Edit</button>
+                                <button class="btn btn-small btn-secondary">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Finance Page -->
+                <div id="finance" class="page-content">
+                    <div class="page-header">
+                        <h2>Finance Management</h2>
+                        <button class="btn btn-primary" id="addTransactionBtn">
+                            <i class="fas fa-plus"></i> Add Transaction
+                        </button>
+                    </div>
+
+                    <div class="finance-summary">
+                        <div class="finance-card">
+                            <h3>Total Revenue</h3>
+                            <p class="finance-value">$125,450</p>
+                            <p class="finance-change">+8% from last month</p>
+                        </div>
+                        <div class="finance-card">
+                            <h3>Total Expenses</h3>
+                            <p class="finance-value">$45,230</p>
+                            <p class="finance-change">-3% from last month</p>
+                        </div>
+                        <div class="finance-card">
+                            <h3>Net Balance</h3>
+                            <p class="finance-value">$80,220</p>
+                            <p class="finance-change">+12% from last month</p>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>Amount</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="financeTableBody">
+                                <tr>
+                                    <td>March 15, 2026</td>
+                                    <td>Tuition Fee - Class 10A</td>
+                                    <td>Revenue</td>
+                                    <td>$5,200</td>
+                                    <td><span class="badge badge-success">Income</span></td>
+                                    <td><span class="badge badge-success">Completed</span></td>
+                                    <td>
+                                        <button class="btn-icon btn-edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>March 14, 2026</td>
+                                    <td>Staff Salary</td>
+                                    <td>Expense</td>
+                                    <td>$8,500</td>
+                                    <td><span class="badge badge-danger">Expense</span></td>
+                                    <td><span class="badge badge-success">Completed</span></td>
+                                    <td>
+                                        <button class="btn-icon btn-edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Library Page -->
+                <div id="library" class="page-content">
+                    <div class="page-header">
+                        <h2>Library Management</h2>
+                        <button class="btn btn-primary" id="addBookBtn">
+                            <i class="fas fa-plus"></i> Add Book
+                        </button>
+                    </div>
+
+                    <div class="library-filters">
+                        <input type="text" placeholder="Search books..." class="search-input" id="bookSearch">
+                        <select class="filter-select" id="categoryFilter">
+                            <option value="">All Categories</option>
+                            <option value="fiction">Fiction</option>
+                            <option value="science">Science</option>
+                            <option value="history">History</option>
+                            <option value="reference">Reference</option>
+                        </select>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ISBN</th>
+                                    <th>Title</th>
+                                    <th>Author</th>
+                                    <th>Category</th>
+                                    <th>Total Copies</th>
+                                    <th>Available</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="libraryTableBody">
+                                <tr>
+                                    <td>978-0-13-110362-7</td>
+                                    <td>The C Programming Language</td>
+                                    <td>Brian W. Kernighan</td>
+                                    <td>Reference</td>
+                                    <td>5</td>
+                                    <td>3</td>
+                                    <td><span class="badge badge-success">Available</span></td>
+                                    <td>
+                                        <button class="btn-icon btn-edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>978-0-7432-7356-5</td>
+                                    <td>A Brief History of Time</td>
+                                    <td>Stephen Hawking</td>
+                                    <td>Science</td>
+                                    <td>4</td>
+                                    <td>1</td>
+                                    <td><span class="badge badge-warning">Low Stock</span></td>
+                                    <td>
+                                        <button class="btn-icon btn-edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Notices Page -->
+                <div id="notices" class="page-content">
+                    <div class="page-header">
+                        <h2>Notices & Announcements</h2>
+                        <button class="btn btn-primary" id="addNoticeBtn">
+                            <i class="fas fa-plus"></i> Add Notice
+                        </button>
+                    </div>
+
+                    <div class="notices-container">
+                        <div class="notice-card">
+                            <div class="notice-header">
+                                <h3>Holiday Announcement</h3>
+                                <span class="notice-date">March 18, 2026</span>
+                            </div>
+                            <div class="notice-body">
+                                <p>School will remain closed on March 25 and 26 for the Annual Sports Day. Classes will resume on March 27, 2026.</p>
+                            </div>
+                            <div class="notice-footer">
+                                <span class="notice-priority">High Priority</span>
+                                <button class="btn-icon btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="notice-card">
+                            <div class="notice-header">
+                                <h3>Exam Schedule Released</h3>
+                                <span class="notice-date">March 16, 2026</span>
+                            </div>
+                            <div class="notice-body">
+                                <p>The final examination schedule for all classes has been released. Students can download the schedule from the portal or collect it from the office.</p>
+                            </div>
+                            <div class="notice-footer">
+                                <span class="notice-priority">Medium Priority</span>
+                                <button class="btn-icon btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="notice-card">
+                            <div class="notice-header">
+                                <h3>New Library Books Arrived</h3>
+                                <span class="notice-date">March 14, 2026</span>
+                            </div>
+                            <div class="notice-body">
+                                <p>A new collection of 50 books has been added to our library. Visit the library to explore the new additions in various categories.</p>
+                            </div>
+                            <div class="notice-footer">
+                                <span class="notice-priority">Low Priority</span>
+                                <button class="btn-icon btn-delete" title="Delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Login Page -->
+                <div id="login" class="page-content">
+                    <div class="page-header">
+                        <h2>Login</h2>
+                    </div>
+                    <div class="settings-container">
+                        <div class="settings-section">
+                            <div class="settings-group">
+                                <label>Username</label>
+                                <input type="text" id="loginUsername" class="form-control" placeholder="admin" required>
+                            </div>
+                            <div class="settings-group">
+                                <label>Password</label>
+                                <input type="password" id="loginPassword" class="form-control" placeholder="admin" required>
+                            </div>
+                        </div>
+                        <div class="settings-actions">
+                            <button type="button" class="btn btn-primary" id="loginSubmitBtn">Login</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Page -->
+                <div id="settings" class="page-content">
+                    <div class="page-header">
+                        <h2>Settings</h2>
+                    </div>
+
+                    <div class="settings-container">
+                        <div class="settings-section">
+                            <h3>General Settings</h3>
+                            <div class="settings-group">
+                                <label>School Name</label>
+                                <input type="text" class="form-control" value="ABC International School">
+                            </div>
+                            <div class="settings-group">
+                                <label>School Email</label>
+                                <input type="email" class="form-control" value="info@abcschool.com">
+                            </div>
+                            <div class="settings-group">
+                                <label>School Phone</label>
+                                <input type="tel" class="form-control" value="+1-555-0100">
+                            </div>
+                            <div class="settings-group">
+                                <label>School Address</label>
+                                <textarea class="form-control" rows="3">123 Education Street, Learning City, LC 12345</textarea>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>Academic Settings</h3>
+                            <div class="settings-group">
+                                <label>Academic Year</label>
+                                <input type="text" class="form-control" value="2025-2026">
+                            </div>
+                            <div class="settings-group">
+                                <label>Number of Terms</label>
+                                <input type="number" class="form-control" value="3">
+                            </div>
+                            <div class="settings-group">
+                                <label>Working Days per Week</label>
+                                <input type="number" class="form-control" value="6">
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>Notification Settings</h3>
+                            <div class="settings-group checkbox">
+                                <input type="checkbox" id="emailNotifications" checked>
+                                <label for="emailNotifications">Enable Email Notifications</label>
+                            </div>
+                            <div class="settings-group checkbox">
+                                <input type="checkbox" id="smsNotifications" checked>
+                                <label for="smsNotifications">Enable SMS Notifications</label>
+                            </div>
+                            <div class="settings-group checkbox">
+                                <input type="checkbox" id="pushNotifications">
+                                <label for="pushNotifications">Enable Push Notifications</label>
+                            </div>
+                        </div>
+
+                        <div class="settings-actions">
+                            <button class="btn btn-primary">Save Changes</button>
+                            <button class="btn btn-secondary">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for Forms -->
+    <div id="formModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add Student</h2>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="dynamicForm">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Class</label>
+                        <select class="form-control" required>
+                            <option value="">Select Class</option>
+                            <option value="10A">Class 10A</option>
+                            <option value="10B">Class 10B</option>
+                            <option value="9A">Class 9A</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                <button type="button" class="btn btn-primary" id="submitBtn">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notificationToast" class="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastMessage">Operation successful!</span>
+        </div>
+    </div>
+</body>
+</html>
