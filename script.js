@@ -133,6 +133,11 @@ function setupEventListeners() {
         sidebarToggle.addEventListener('click', toggleSidebar);
     }
 
+    const mobileSidebarToggle = document.getElementById('mobileSidebarToggle');
+    if (mobileSidebarToggle) {
+        mobileSidebarToggle.addEventListener('click', toggleSidebar);
+    }
+
     // Theme Toggle
     const themeToggle = document.getElementById('themeToggle');
     if (themeToggle) {
@@ -288,36 +293,29 @@ function navigateToPage(page) {
 
 function toggleSidebar() {
     const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
     const isActive = sidebar.classList.toggle('active');
     
-    // Close sidebar when clicking outside on mobile
     if (window.innerWidth <= 768) {
-        const mainContent = document.querySelector('.main-content');
         if (isActive) {
-            mainContent.addEventListener('click', closeSidebarOnOutsideClick);
+            overlay.style.display = 'block';
+            overlay.addEventListener('click', closeSidebar);
         } else {
-            mainContent.removeEventListener('click', closeSidebarOnOutsideClick);
+            overlay.style.display = 'none';
+            overlay.removeEventListener('click', closeSidebar);
         }
     }
 }
 
-function closeSidebarOnOutsideClick(event) {
-    const sidebar = document.querySelector('.sidebar');
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    
-    // Don't close if clicking on the toggle button
-    if (event.target === sidebarToggle || sidebarToggle.contains(event.target)) {
-        return;
-    }
-    
-    // Close sidebar
-    sidebar.classList.remove('active');
-    event.currentTarget.removeEventListener('click', closeSidebarOnOutsideClick);
-}
-
 function closeSidebar() {
     const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
     sidebar.classList.remove('active');
+    if (window.innerWidth <= 768) {
+        overlay.style.display = 'none';
+        overlay.removeEventListener('click', closeSidebar);
+    }
+}
     
     // Remove outside click listener
     const mainContent = document.querySelector('.main-content');
