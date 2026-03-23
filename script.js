@@ -1,8 +1,58 @@
-// ===========================
-// SCHOOL MANAGEMENT SYSTEM
-// Main Application JavaScript
-// ===========================
+function toggleSidebar() {
+    const screenWidth = window.innerWidth;
+    const isPhone = screenWidth <= 499;
+    const isMobile = screenWidth <= 768;
+    
+    if (isPhone) {
+        // Phone: Toggle hamburger dropdown
+        const dropdown = document.getElementById('hamburgerDropdown');
+        const overlay = document.getElementById('dropdownOverlay');
+        
+        if (dropdown && overlay) {
+            const isActive = dropdown.classList.toggle('active');
+            overlay.classList.toggle('active', isActive);
+            
+            if (isActive) {
+                overlay.addEventListener('click', closeDropdown);
+                document.addEventListener('keydown', closeOnEsc);
+            } else {
+                overlay.removeEventListener('click', closeDropdown);
+                document.removeEventListener('keydown', closeOnEsc);
+            }
+        }
+    } else if (isMobile) {
+        // Tablet/mobile: Toggle sidebar overlay
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        
+        if (sidebar) {
+            sidebar.classList.toggle('active');
+            if (sidebarOverlay) {
+                sidebarOverlay.classList.toggle('active', sidebar.classList.contains('active'));
+            }
+        }
+    }
+    // Desktop: No action needed (always visible)
+}
 
+function closeDropdown() {
+    const dropdown = document.getElementById('hamburgerDropdown');
+    const overlay = document.getElementById('dropdownOverlay');
+    
+    if (dropdown) dropdown.classList.remove('active');
+    if (overlay) {
+        overlay.classList.remove('active');
+        overlay.removeEventListener('click', closeDropdown);
+    }
+    document.removeEventListener('keydown', closeOnEsc);
+}
+
+function closeOnEsc(e) {
+    if (e.key === 'Escape') {
+        closeDropdown();
+    }
+}
+  
 // Global State Management
 const AppState = {
     currentPage: 'dashboard',
@@ -110,9 +160,7 @@ function handleProfilePicUpload(event) {
     reader.readAsDataURL(file);
 }
 
-// ===========================
 // EVENT LISTENERS SETUP
-// ===========================
 
 function setupEventListeners() {
     // Sidebar Navigation
@@ -217,14 +265,16 @@ function setupPageNavigation() {
     navigateToPage(currentPage);
 }
 
-// ===========================
 // NAVIGATION FUNCTIONS
-// ===========================
-
 function handleNavigation(e) {
     e.preventDefault();
     const page = this.getAttribute('data-page');
     navigateToPage(page);
+    
+    // Close dropdown on navigation (mobile)
+    if (window.innerWidth <= 768) {
+        closeDropdown();
+    }
 }
 
 function navigateToPage(page) {
@@ -309,14 +359,13 @@ function toggleSidebar() {
 
 function closeSidebar() {
     const sidebar = document.querySelector('.sidebar');
-    const overlay = document.getElementById('sidebarOverlay');
+    const overlay = document.getElementById('sidebarOverlay') || document.querySelector('.overlay');
     sidebar.classList.remove('active');
     if (window.innerWidth <= 768) {
         overlay.style.display = 'none';
         overlay.removeEventListener('click', closeSidebar);
+        overlay.setAttribute('aria-expanded', 'false');
     }
-
-    // Remove outside click listener
     document.removeEventListener('click', closeSidebarOnOutsideClick);
 }
 
@@ -1323,16 +1372,17 @@ function formatCurrency(amount) {
 // ===========================
 
 document.addEventListener('keydown', function(e) {
-    // Close modal with Escape key
     if (e.key === 'Escape') {
         closeFormModal();
+        closeSearchBar();
+        closeSidebar();
     }
 
-    // Quick navigation with Ctrl + number
-    if (e.ctrlKey) {
+    if (e.ctrlKey || e.metaKey) {
         const pages = ['dashboard', 'students', 'teachers', 'classes', 'attendance', 'grades', 'timetable', 'events', 'finance', 'library', 'notices', 'settings'];
         const pageNum = parseInt(e.key) - 1;
         if (pageNum >= 0 && pageNum < pages.length) {
+            e.preventDefault();
             navigateToPage(pages[pageNum]);
         }
     }
