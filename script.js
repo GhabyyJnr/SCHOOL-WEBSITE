@@ -121,11 +121,6 @@ function setupEventListeners() {
         link.addEventListener('click', handleNavigation);
     });
 
-    function toggleSidebar() {
-    const sidebar = document.querySelector('.sidebar');
-    const overlay = document.getElementById('sidebarOverlay');
-    const isActive = sidebar.classList.toggle('active');
-}
     // Sidebar Footer Logout
     const sidebarLogoutBtn = document.getElementById('sidebarLogoutBtn');
     if (sidebarLogoutBtn) {
