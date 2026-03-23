@@ -121,6 +121,11 @@ function setupEventListeners() {
         link.addEventListener('click', handleNavigation);
     });
 
+    function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const isActive = sidebar.classList.toggle('active');
+}
     // Sidebar Footer Logout
     const sidebarLogoutBtn = document.getElementById('sidebarLogoutBtn');
     if (sidebarLogoutBtn) {
@@ -315,11 +320,9 @@ function closeSidebar() {
         overlay.style.display = 'none';
         overlay.removeEventListener('click', closeSidebar);
     }
-}
-    
+
     // Remove outside click listener
-    const mainContent = document.querySelector('.main-content');
-    mainContent.removeEventListener('click', closeSidebarOnOutsideClick);
+    document.removeEventListener('click', closeSidebarOnOutsideClick);
 }
 
 // THEME TOGGLE
