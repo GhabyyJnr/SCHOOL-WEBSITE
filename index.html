@@ -135,11 +135,17 @@
                     <h1 id="pageTitle">Dashboard</h1>
                 </div>
                 <div class="header-right">
-                    <div class="search-bar">
+                    <div class="search-bar" id="searchBar">
                         <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search...">
+                        <input type="text" placeholder="Search..." id="globalSearch">
+                        <button class="search-close" id="searchCloseBtn" title="Close search">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                     <div class="header-icons">
+                        <button class="icon-btn" id="searchToggleBtn" title="Toggle search">
+                            <i class="fas fa-search"></i>
+                        </button>
                         <button class="icon-btn" id="notificationBtn">
                             <i class="fas fa-bell"></i>
                             <span class="notification-badge">3</span>

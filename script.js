@@ -151,6 +151,40 @@ function setupEventListeners() {
         notificationBtn.addEventListener('click', showNotifications);
     }
 
+    // Search Toggle Button
+    const searchToggleBtn = document.getElementById('searchToggleBtn');
+    if (searchToggleBtn) {
+        searchToggleBtn.addEventListener('click', toggleSearchBar);
+    }
+
+    // Search Close Button
+    const searchCloseBtn = document.getElementById('searchCloseBtn');
+    if (searchCloseBtn) {
+        searchCloseBtn.addEventListener('click', closeSearchBar);
+    }
+
+    // Global Search Input
+    const globalSearch = document.getElementById('globalSearch');
+    if (globalSearch) {
+        globalSearch.addEventListener('input', handleGlobalSearch);
+        globalSearch.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeSearchBar();
+            } else if (e.key === 'Enter') {
+                // Optional: perform search on Enter
+                handleGlobalSearch(e);
+            }
+        });
+        globalSearch.addEventListener('blur', function(e) {
+            // Close search bar after a short delay to allow for button clicks
+            setTimeout(() => {
+                if (!document.activeElement.closest('.search-bar')) {
+                    closeSearchBar();
+                }
+            }, 150);
+        });
+    }
+
     // Modal Controls
     setupModalControls();
 
@@ -254,12 +288,40 @@ function navigateToPage(page) {
 
 function toggleSidebar() {
     const sidebar = document.querySelector('.sidebar');
-    sidebar.classList.toggle('active');
+    const isActive = sidebar.classList.toggle('active');
+    
+    // Close sidebar when clicking outside on mobile
+    if (window.innerWidth <= 768) {
+        const mainContent = document.querySelector('.main-content');
+        if (isActive) {
+            mainContent.addEventListener('click', closeSidebarOnOutsideClick);
+        } else {
+            mainContent.removeEventListener('click', closeSidebarOnOutsideClick);
+        }
+    }
+}
+
+function closeSidebarOnOutsideClick(event) {
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    
+    // Don't close if clicking on the toggle button
+    if (event.target === sidebarToggle || sidebarToggle.contains(event.target)) {
+        return;
+    }
+    
+    // Close sidebar
+    sidebar.classList.remove('active');
+    event.currentTarget.removeEventListener('click', closeSidebarOnOutsideClick);
 }
 
 function closeSidebar() {
     const sidebar = document.querySelector('.sidebar');
     sidebar.classList.remove('active');
+    
+    // Remove outside click listener
+    const mainContent = document.querySelector('.main-content');
+    mainContent.removeEventListener('click', closeSidebarOnOutsideClick);
 }
 
 // THEME TOGGLE
@@ -282,6 +344,114 @@ function updateThemeIcon() {
         const isDark = document.body.classList.contains('dark-mode');
         themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
     }
+}
+
+// ===========================
+// SEARCH BAR CONTROLS
+// ===========================
+
+function toggleSearchBar() {
+    const searchBar = document.getElementById('searchBar');
+    const searchToggleBtn = document.getElementById('searchToggleBtn');
+    const searchInput = document.getElementById('globalSearch');
+    
+    if (searchBar.classList.contains('active')) {
+        closeSearchBar();
+    } else {
+        searchBar.classList.add('active');
+        searchToggleBtn.classList.add('active');
+        if (searchInput) {
+            searchInput.focus();
+        }
+        
+        // Close search bar when clicking outside
+        setTimeout(() => {
+            document.addEventListener('click', closeSearchBarOnOutsideClick);
+        }, 100);
+    }
+}
+
+function closeSearchBar() {
+    const searchBar = document.getElementById('searchBar');
+    const searchToggleBtn = document.getElementById('searchToggleBtn');
+    const searchInput = document.getElementById('globalSearch');
+    
+    searchBar.classList.remove('active');
+    searchToggleBtn.classList.remove('active');
+    if (searchInput) {
+        searchInput.value = '';
+        searchInput.blur();
+    }
+    
+    document.removeEventListener('click', closeSearchBarOnOutsideClick);
+}
+
+function closeSearchBarOnOutsideClick(event) {
+    const searchBar = document.getElementById('searchBar');
+    const searchToggleBtn = document.getElementById('searchToggleBtn');
+    
+    // Don't close if clicking on the search bar, toggle button, or their children
+    if (searchBar.contains(event.target) || 
+        searchToggleBtn.contains(event.target) || 
+        event.target === searchToggleBtn) {
+        return;
+    }
+    
+    closeSearchBar();
+}
+
+function handleGlobalSearch(event) {
+    const query = event.target.value.toLowerCase().trim();
+    
+    if (query.length === 0) {
+        // Clear any previous search results
+        clearGlobalSearch();
+        return;
+    }
+    
+    // Perform global search across different data types
+    performGlobalSearch(query);
+}
+
+function performGlobalSearch(query) {
+    const results = {
+        students: AppState.students.filter(student => 
+            student.name.toLowerCase().includes(query) ||
+            student.rollNo.toLowerCase().includes(query) ||
+            student.email.toLowerCase().includes(query)
+        ),
+        teachers: AppState.teachers.filter(teacher => 
+            teacher.name.toLowerCase().includes(query) ||
+            teacher.teacherId.toLowerCase().includes(query) ||
+            teacher.email.toLowerCase().includes(query) ||
+            teacher.department.toLowerCase().includes(query)
+        ),
+        classes: AppState.classes.filter(cls => 
+            cls.name.toLowerCase().includes(query) ||
+            cls.teacher.toLowerCase().includes(query)
+        )
+    };
+    
+    // Display search results (you can customize this)
+    displaySearchResults(results, query);
+}
+
+function displaySearchResults(results, query) {
+    // For now, just log results. You can implement a dropdown or modal to show results
+    console.log('Search results for:', query, results);
+    
+    // Show a toast with result counts
+    const totalResults = results.students.length + results.teachers.length + results.classes.length;
+    if (totalResults > 0) {
+        showToast(`Found ${totalResults} results for "${query}"`, 'info');
+    } else {
+        showToast(`No results found for "${query}"`, 'warning');
+    }
+}
+
+function clearGlobalSearch() {
+    // Clear any search highlights or results
+    console.log('Search cleared');
 }
 
 // ===========================
